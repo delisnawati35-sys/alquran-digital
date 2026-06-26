@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 
 session_start();
 
+require_once __DIR__ . '/config/koneksi.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,7 @@ $status_materi      = $_POST['status_materi'];
 
 
 /*
+|/*
 |--------------------------------------------------------------------------
 | Upload Gambar ke Folder uploads
 |--------------------------------------------------------------------------
@@ -38,9 +41,9 @@ $status_materi      = $_POST['status_materi'];
 
 $namaBaru = "";
 
-if ($_FILES['gambar_materi']['error'] == 0) {
+if (isset($_FILES['gambar_materi']) && $_FILES['gambar_materi']['error'] == 0) {
 
-    $ekstensiValid = ['jpg','jpeg','png'];
+    $ekstensiValid = ['jpg', 'jpeg', 'png'];
 
     $namaFile = $_FILES['gambar_materi']['name'];
     $tmpFile  = $_FILES['gambar_materi']['tmp_name'];
@@ -57,13 +60,19 @@ if ($_FILES['gambar_materi']['error'] == 0) {
 
     }
 
-    $namaBaru = uniqid() . "." . $ekstensi;
+    // Nama file baru agar tidak bentrok
+    $namaBaru = uniqid('img_') . "." . $ekstensi;
 
-    move_uploaded_file(
-        $tmpFile,
-        "uploads/" . $namaBaru
-    );
+    // Path tujuan upload
+    $tujuan = __DIR__ . "/uploads/" . $namaBaru;
 
+    // Pindahkan file
+    if (!move_uploaded_file($tmpFile, $tujuan)) {
+        die("Gagal mengupload gambar ke folder uploads.");
+    }
+
+} else {
+    die("Tidak ada gambar yang dipilih atau terjadi kesalahan upload.");
 }
 /*
 |--------------------------------------------------------------------------

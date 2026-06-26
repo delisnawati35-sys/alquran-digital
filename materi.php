@@ -210,11 +210,13 @@ img{
                         </td>
 
                         <td>
-                            <?php if (!empty($data['gambar_materi'])): ?>
-                                <img src="uploads/<?php echo $data['gambar_materi']; ?>" style="max-width:200px;">
-                            <?php else: ?>
+                            <?php if (!empty($data['gambar_materi'])) { ?>
+                                <img src="uploads/<?php echo $data['gambar_materi']; ?>"
+                                    class="img-fluid"
+                                    style="max-width:200px;">
+                            <?php } else { ?>
                                 -
-                            <?php endif; ?>
+                            <?php } ?>
                         </td>
                         <td>
                             <?php echo $data['kode_materi']; ?>

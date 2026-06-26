@@ -3,10 +3,10 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "alquran_digital";
+$db   = "alquran_digital"; // ganti sesuai database Anda
 
-$koneksi = mysqli_connect($host,$user,$pass,$db);
+$koneksi = mysqli_connect($host, $user, $pass, $db);
 
-if(!$koneksi){
-    die(mysqli_connect_error());
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
 }
